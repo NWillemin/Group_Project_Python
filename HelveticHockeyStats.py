@@ -1,37 +1,17 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-#import the necessary libraries
+#first, import the necessary libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+%matplotlib inline
 
-#for the use of matplotlib in Jupyter Notebook
-get_ipython().run_line_magic('matplotlib', 'inline')
-
-
-# In[2]:
-
-
-#read the URL to the dataset(CSV) using pandas
+#read the URL of the dataset(CSV) using pandas
 url = 'https://data.sihf.ch/Statistic/api/cms/export?alias=player&searchQuery=1%2F%2F1&filterQuery=&filterBy=Season%2CPhase%2CTeam%2CPosition%2CLicence&orderBy=points&orderByDescending=true&format=csv'
 stats = pd.read_csv(url, sep = ';')
-
-
-# In[3]:
-
 
 #set a first dictionary to translate the values of the column "Pos"
 dictionary_val = {'Stürmer':'Forward', 'Verteidiger':'Defender'}
 #2nd dictionary for the columns (this way, we avoid replacing the 'R' of 'Rapperswil' with 'Ranking')
 dictionary_col = {"Spieler":"Player", "R":"Ranking"}
-
-
-# In[4]:
-
 
 #apply the first dictionary to the values
 stats.replace(dictionary_val, inplace = True, regex = True)
@@ -46,37 +26,12 @@ stats["PIM/GP"] = round(stats["PIM Total"] / stats["GP"], 2)
 stats["Eff Total"] = stats["PTS"] - stats["PIM Total"]
 stats["Eff/GP"] = stats["P/GP"] - stats["PIM/GP"]
 
-
-# In[5]:
-
-
-#ensure that the numeric columns are read as integers or floats
-stats.dtypes
-
-
-# In[6]:
-
-
 #set 'Ranking' as the index
 stats.set_index("Ranking", inplace = True)
 
-
-# In[7]:
-
-
-#overview of the data
-stats.head()
-
-
-# In[10]:
-
-
+print("This program allows you to navigate through the statistics of the National League, Switzerland's elite ice hockey league. You can search by 'player', 'ranking', 'team', 'team rankings', 'top rankings', 'defenders', 'goals', 'assists', 'efficiency', and 'penalties'. Enjoy!")
 #set the start_over variable as "yes" to enter the loop
 start_over = "yes"
-
-
-# In[ ]:
-
 
 #start the loop 
 while start_over == "yes":
@@ -268,10 +223,3 @@ while start_over == "yes":
         print("Let's start over then!")
     elif start_over == "no":
         print("I hope you found the stats you were looking for!")
-
-
-# In[ ]:
-
-
-
-
